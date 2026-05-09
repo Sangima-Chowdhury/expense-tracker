@@ -1,4 +1,4 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, request, redirect
 from flask_sqlalchemy import SQLAlchemy
 
 app = Flask(__name__)
@@ -18,7 +18,31 @@ class Expense(db.Model):
 
 @app.route("/")
 def home():
-    return render_template("index.html")
+    expenses = Expense.query.all()
+    return render_template("index.html", expenses=expenses)
+
+
+@app.route("/add", methods=["POST"])
+def add_expense():
+    title = request.form.get("title")
+    amount = request.form.get("amount")
+
+    new_expense = Expense(title=title, amount=float(amount))
+
+    db.session.add(new_expense)
+    db.session.commit()
+
+    return redirect("/")
+
+
+@app.route("/delete/<int:id>")
+def delete(id):
+    expense = Expense.query.get(id)
+
+    db.session.delete(expense)
+    db.session.commit()
+
+    return redirect("/")
 
 
 if __name__ == "__main__":
