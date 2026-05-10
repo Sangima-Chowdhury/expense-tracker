@@ -21,5 +21,4 @@ A Flask-based expense tracker web application that allows users to add, view, an
 ## What I Learned
 This project helped me understand CRUD operations, form handling, POST requests, database storage, and dynamic page rendering using Flask and Jinja templates.
 
-## GitHub
-https://github.com/Sangima-Chowdhury/expense-tracker
+
